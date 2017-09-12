@@ -36,7 +36,7 @@ def download3(url, user_agent = 'wswp', num_retries = 2):
         if(num_retries >0):
             if hasattr(e, 'code') and (500 <= e.code < 600):
                 # recurs ive l y retry Sxx HTTP errors
-                return download(url, num_retries-1)
+                return download(url, user_agent, num_retries-1)
     return html
 
 #'''
@@ -58,7 +58,7 @@ def download4(url, user_agent = 'wswp', proxy=None, num_retries = 2):
         if(num_retries >0):
             if hasattr(e, 'code') and (500 <= e.code < 600):
                 # recurs ive l y retry Sxx HTTP errors
-                return download(url, num_retries-1)
+                return download(url, user_agent, proxy, num_retries-1)
     return html
 #'''
 
@@ -68,3 +68,5 @@ if __name__ == '__main__':
 #    download('http://httpstat.us/500') 
     print
     print download('http://example.webscraping.com')
+#     print'\n\n\n--------------------------------------------------------\n\n\n'
+#     print download('http://www.seo.net.cn/sitemap')

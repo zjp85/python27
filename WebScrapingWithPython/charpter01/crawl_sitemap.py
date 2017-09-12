@@ -8,7 +8,7 @@ def crawl_sitemap(url):
     sitemap = download(url)
     # extract the sitemap links
     links = re.findall('<loc>(.*?)</loc>', sitemap)
-    # download each Link
+    # download each Link    
     for link in links:
         html = download(link)
         # scrape html here
@@ -16,3 +16,6 @@ def crawl_sitemap(url):
         
 if __name__ == '__main__':
     crawl_sitemap('http://example.webscraping.com/sitemap.xml')
+#     crawl_sitemap('http://www.seo.net.cn/sitemap')
+    
+    
