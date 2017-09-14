@@ -3,6 +3,18 @@ import re
 import urllib2
 import urlparse
 
+color_r = '\033[1;31m'
+color_g = '\033[1;32m'
+# color_y = '\033[1;33m'
+color_b = '\033[1;34m'
+color_p = '\033[1;35m'
+color_y = '\033[1;36m'
+
+color_end = '\033[0m'
+
+color_err = color_r
+color_info = color_g
+
 # simple download
 def download1(url):
     """Simple downloader"""
@@ -10,7 +22,7 @@ def download1(url):
 
 def download2(url,  num_retries = 2):
     """Download function that also retries 5XX errors"""
-    print '\n-------Start downloading: [', url,']-------\n\n'
+    print '\n-------Start downloading: [', url,']-------\n'
     try:
         html = urllib2.urlopen(url).read()
     except urllib2.URLError as e:
@@ -25,7 +37,7 @@ def download2(url,  num_retries = 2):
 
 def download3(url, user_agent = 'wswp', num_retries = 2):
     """Download function that includes user agent support"""
-    print '-------Start downloading: [', url,']-------\n\n'
+    print '-------Start downloading: [', url,']-------\n\n'    
     headers = {'User-agent:':user_agent}
     request = urllib2.Request(url, headers=headers)
     try:
