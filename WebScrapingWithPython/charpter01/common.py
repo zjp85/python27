@@ -88,5 +88,3 @@ if __name__ == '__main__':
 #    download('http://httpstat.us/500') 
     print
     print download('http://example.webscraping.com')
-#     print'\n\n\n--------------------------------------------------------\n\n\n'
-#     print download('http://www.seo.net.cn/sitemap')
