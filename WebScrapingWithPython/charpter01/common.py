@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 import urllib2
 import urlparse
 
@@ -19,7 +20,7 @@ def download2(url,  num_retries = 2):
         if(num_retries >0):
             if hasattr(e, 'code') and (500 <= e.code < 600):
                 # recurs ive l y retry Sxx HTTP errors
-                return download(url, num_retries-1)
+                return download2(url, num_retries-1)
     return html
 
 def download3(url, user_agent = 'wswp', num_retries = 2):
@@ -36,7 +37,7 @@ def download3(url, user_agent = 'wswp', num_retries = 2):
         if(num_retries >0):
             if hasattr(e, 'code') and (500 <= e.code < 600):
                 # recurs ive l y retry Sxx HTTP errors
-                return download(url, user_agent, num_retries-1)
+                return download3(url, user_agent, num_retries-1)
     return html
 
 #'''
@@ -50,15 +51,21 @@ def download4(url, user_agent = 'wswp', proxy=None, num_retries = 2):
         proxy_params = {urlparse.urlparse(url).scheme:proxy}
         opener.add_handler(urllib2.ProxyHandler(proxy_params))
     try:
+        # check if url is legal
+        if re.match(r'^https?:/{2}\w.+$', url):
+            html = urllib2.urlopen(url).read()
+        else:
+            return None
+        """
         html = urllib2.urlopen(url).read()
+        """
     except urllib2.URLError as e:
-        print 'Download Error:', e.reason
-        
+        print 'Download Error:', e.reason        
         html = None
         if(num_retries >0):
             if hasattr(e, 'code') and (500 <= e.code < 600):
                 # recurs ive l y retry Sxx HTTP errors
-                return download(url, user_agent, proxy, num_retries-1)
+                return download4(url, user_agent, proxy, num_retries-1)
     return html
 #'''
 
