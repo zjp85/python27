@@ -14,6 +14,7 @@ color_end = '\033[0m'
 
 color_err = color_r
 color_info = color_g
+color_warn = color_p
 
 # simple download
 def download1(url):
@@ -22,7 +23,7 @@ def download1(url):
 
 def download2(url,  num_retries = 2):
     """Download function that also retries 5XX errors"""
-    print '\n-------Start downloading: [', url,']-------\n'
+    print '\n-------downloading: [', url,']-------\n'
     try:
         html = urllib2.urlopen(url).read()
     except urllib2.URLError as e:
@@ -37,7 +38,7 @@ def download2(url,  num_retries = 2):
 
 def download3(url, user_agent = 'wswp', num_retries = 2):
     """Download function that includes user agent support"""
-    print '-------Start downloading: [', url,']-------\n\n'    
+    print '-------downloading: [', url,']-------\n\n'    
     headers = {'User-agent:':user_agent}
     request = urllib2.Request(url, headers=headers)
     try:
@@ -55,7 +56,7 @@ def download3(url, user_agent = 'wswp', num_retries = 2):
 #'''
 def download4(url, user_agent = 'wswp', proxy=None, num_retries = 2):
     """Download function that includes user agent support"""
-    print '-------Start downloading: [', url,']-------\n\n'
+    print '-------downloading: [', url,']-------\n\n'
     headers = {'User-agent:':user_agent}
     request = urllib2.Request(url, headers=headers)
     opener = urllib2.build_opener()
