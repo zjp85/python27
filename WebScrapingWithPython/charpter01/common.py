@@ -82,7 +82,35 @@ def download4(url, user_agent = 'wswp', proxy=None, num_retries = 2):
     return html
 #'''
 
-download = download4
+# add agent support
+def download5(url, user_agent = 'wswp', proxy=None, num_retries = 2):
+    """Download function that includes user agent support"""
+    print '-------downloading: [', url,']-------\n\n'
+    headers = {'User-agent:':user_agent}
+    request = urllib2.Request(url, headers=headers)
+    opener = urllib2.build_opener()
+    if proxy:
+        proxy_params = {urlparse.urlparse(url).scheme:proxy}
+        opener.add_handler(urllib2.ProxyHandler(proxy_params))
+    try:
+        # check if url is legal
+        if re.match(r'^https?:/{2}\w.+$', url):
+            response = opener.open(request)
+            html = response.read()
+            code = response.code
+        else:
+            return None
+    except urllib2.URLError as e:
+        print 'Download Error:', e.reason        
+        html = ''
+        if(num_retries >0):
+            if hasattr(e, 'code') and (500 <= e.code < 600):
+                # recurs ive l y retry Sxx HTTP errors
+                return download4(url, user_agent, proxy, num_retries-1)
+
+    return html
+
+download = download5
 
 if __name__ == '__main__':
 #    download('http://httpstat.us/500') 
